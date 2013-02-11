@@ -42,6 +42,7 @@ class page{
 		$debug->msg("loadFile on page class, loading file $this->ThemeRootPath $file");
 		$this->objFiles[] = new htmlLoaderClass($this->ThemeRootPath);
 		$this->objFiles[count($this->objFiles)-1]->loadF($file);
+		return $this->objFiles[count($this->objFiles)-1];
 	}
 
 	public function printAll(){
