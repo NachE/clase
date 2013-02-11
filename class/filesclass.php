@@ -54,26 +54,27 @@ class files{
 private $filegestor;
 
 protected function openF($file, $opt="r"){
-	if (!$archivo){
-		//$this->debug("class files, abre_archivo(): Falta el parametro archivo",1);
+	global $debug;
+	if (!$file){
+		$debug->msg("class files, abre_archivo(): Falta el parametro archivo",1);
 		return FALSE;
 	}else{
-		//$this->debug("class files, abre_archivo(): Abriendo el archivo ".$archivo,2);
+		$debug->msg("class files, abre_archivo(): Abriendo el archivo $file",2);
                 $this->filegestor = fopen($file, $opt);
-                //$this->debug("class files abre_archivo(): El gestor de archivo ahora es: $this->filegestor para el archivo: $archivo",2);
+                $debug->msg("class files abre_archivo(): El gestor de archivo ahora es: $this->filegestor para el archivo: $file",2);
                 return $this->filegestor;
         }
 }
 
 protected function readF($file,$opt="r"){
-
+	global $debug;
 	if (!file_exists ($file)){
-		//$this->debug("class files, lee_archivo(): el archivo ".$archivo." no existe",1);
+		$debug->msg("class files, lee_archivo(): el archivo ".$file." no existe",1);
 		return FALSE;
 	}else{
 		if(filesize($file)){
 			//$this->debug("class files, lee_archivo(): Se procede a leer archivo",2);
-			$resource = $this->abre_archivo($archivo,$opciones);
+			$resource = $this->openF($file,$opt);
 			$content = fread($resource, filesize($file));
 			$this->closeF($resource);
 			return $content;
@@ -100,17 +101,21 @@ protected function writeF($file,$content,$opt="r+"){
 }
 
 protected function closeF($resource){
-	if(!$gestor){
-		//$this->debug("class files, cierra_archivo(): Se intento cerrar un archivo no abierto",1);
+	global $debug;
+	if(!$resource){
+		$debug->msg("class files, closeF(): Se intento cerrar un archivo no abierto",1);
 		return FALSE;
 	}else{
-		//$this->debug("class files, cierra_archivo(): cerrando archivo con gestor: $this->filegestor | $gestor",2);
+		$debug->msg("class files, closeF(): cerrando archivo con gestor: $this->filegestor | $resource",2);
 		fclose($resource);
-		//$this->debug("class files, cierra_archivo(): Archivo cerrado, gestor actual: $this->filegestor | $gestor",2);
-		//$this->debug("Funcion cierra_archivo: Archivo cerrado");
+		$debug->msg("class files, closeF(): Archivo cerrado, gestor actual: $this->filegestor | $resource",2);
+		$debug->msg("Funcion closeF: Archivo cerrado");
 	}
 }
 
+public function __destruct(){
+	$this->closeF($this->filegestor);
+}
 
 
 }// filesclass end

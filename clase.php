@@ -22,6 +22,25 @@
  *
  */
 
+
+
+class claseDebug{
+	private $msg;
+	public function msg($msg,$level=0){
+		$this->msg.=$msg."\n";
+	}
+
+	public function rawmsg($msg,$level=0){
+		$this->msg.=$msg;
+	}
+
+	public function printDebug(){
+		echo $this->msg;
+	}
+}
+
+$debug = new claseDebug();
+
 class claseConfig{
 /**********************
 * Do not edit this
@@ -76,6 +95,8 @@ class claseConfig{
 				$CLASSPATH."dbclass.php",
 				$CLASSPATH."filesclass.php",
 				$CLASSPATH."mainpageclass.php",
+				$CLASSPATH."htmlloaderclass.php",
+				$CLASSPATH."pageclass.php",
 				$CLASSPATH."themesclass.php"
 			);
 	}
